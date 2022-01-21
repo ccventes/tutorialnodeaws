@@ -1,3 +1,4 @@
+const color = require('colors');
 const mate = require('./math.js');
 console.log(mate);
 const os = require('os');
@@ -40,7 +41,7 @@ http.createServer(function (req, res ){ // peticion request req, respuesta  resp
 
 }).listen(3000);
 */
-
+/*
 const http = require('http');
 const handleserver = function (req, res ){ // peticion request req, respuesta  response res
     res.writeHead(200, {'content-type': 'text/html'});// cabecera, e pone un codigo de estado http y el contenido de lo que se se espera (texto html)
@@ -52,6 +53,17 @@ const handleserver = function (req, res ){ // peticion request req, respuesta  r
 const server  = http.createServer(handleserver);
 server.listen(3000, function(){// crea una funncion callback despues de acceder al servidor
 
-    console.log('server on port 3000');
+    console.log('server on port 3000' .green);
 });
+*/
+const express = require('express');
+const server  = express();
+server.get('/', function(req, res){
+     res.send('<h1>Hola MUndo</h1>');
+     res.end();
 
+});
+server.listen(3000,function(){
+    console.log('server on port 3000'.green)
+
+} );
