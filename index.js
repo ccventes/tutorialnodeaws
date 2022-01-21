@@ -31,3 +31,27 @@ fs.readFile('./texto.txt',  function(err,data){ // ubicacion del archivo,  funci
         console.log(data.toString());
     }
 });
+/*
+const http = require('http');
+http.createServer(function (req, res ){ // peticion request req, respuesta  response res
+    res.writeHead(200, {'content-type': 'text/html'});// cabecera, e pone un codigo de estado http y el contenido de lo que se se espera (texto html)
+    res.write('<h1>Hola mundo desde node js</h1>'); // escibir 
+    res.end();
+
+}).listen(3000);
+*/
+
+const http = require('http');
+const handleserver = function (req, res ){ // peticion request req, respuesta  response res
+    res.writeHead(200, {'content-type': 'text/html'});// cabecera, e pone un codigo de estado http y el contenido de lo que se se espera (texto html)
+    res.write('<h1>Hola mundo desde node js</h1>'); // escibir 
+    res.end();
+
+}
+
+const server  = http.createServer(handleserver);
+server.listen(3000, function(){// crea una funncion callback despues de acceder al servidor
+
+    console.log('server on port 3000');
+});
+
