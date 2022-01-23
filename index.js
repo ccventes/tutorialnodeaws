@@ -1,3 +1,4 @@
+
 const color = require('colors');
 const mate = require('./math.js');
 console.log(mate);
@@ -57,18 +58,33 @@ server.listen(3000, function(){// crea una funncion callback despues de acceder 
 });
 */
 const express = require('express');
+const res = require('express/lib/response');
 const server  = express();
 server.get('/', function(req, res){
      res.send('<h1>Hola MUndo</h1>');
      res.end();
 
 });
+server.use(express.json()); // hace que expres entienda el formato json
 
 server.get('/about', (req,res)=>{ // creando la ruta about
 
     res.send('About me');
       
 });
+server.get('/user', (req,res)=>{ // retornando un json
+
+    res.send({
+
+        username: 'Cameron',
+        lastName: 'Ventes'
+    
+    });
+      
+});
+
+
+
 server.get('/contact', (req,res)=>{ // creando la ruta about
 
     res.send('Contactame');
@@ -80,6 +96,25 @@ server.get('/otro', (req,res)=>{ // creando la ruta about
     res.send('<h1>pos que te digo</h1>');
       
 });
+
+server.post('/user/:id',(req,res)=>{ //mostando lo recibido del post en consola
+    console.log(req.body);
+    console.log(req.params);
+    res.send('REQUEST POST');
+});
+
+server.put('/aput',(req,res)=>{
+
+    res.send('form contactupdate request recieved');
+});
+
+server.delete('/adel',(req,res)=>{
+
+    res.send('delete request');
+});
+
+
+
 server.listen(5000,function(){
     console.log('server on port 5000'.green)
 
