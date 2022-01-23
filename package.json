@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/ccventes/tutorialnodeaws/issues"
   },
-  "homepage": "https://github.com/ccventes/tutorialnodeaws#readme"
+  "homepage": "https://github.com/ccventes/tutorialnodeaws#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
 }

@@ -63,7 +63,24 @@ server.get('/', function(req, res){
      res.end();
 
 });
-server.listen(3000,function(){
-    console.log('server on port 3000'.green)
+
+server.get('/about', (req,res)=>{ // creando la ruta about
+
+    res.send('About me');
+      
+});
+server.get('/contact', (req,res)=>{ // creando la ruta about
+
+    res.send('Contactame');
+      
+});
+
+server.get('/otro', (req,res)=>{ // creando la ruta about
+
+    res.send('<h1>pos que te digo</h1>');
+      
+});
+server.listen(5000,function(){
+    console.log('server on port 5000'.green)
 
 } );
