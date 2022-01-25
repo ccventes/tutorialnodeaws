@@ -59,6 +59,7 @@ server.listen(3000, function(){// crea una funncion callback despues de acceder 
 */
 const express = require('express');
 const res = require('express/lib/response');
+const { append } = require('express/lib/response');
 const server  = express();
 server.get('/', function(req, res){
      res.send('<h1>Hola MUndo</h1>');
@@ -72,6 +73,13 @@ server.get('/about', (req,res)=>{ // creando la ruta about
     res.send('About me');
       
 });
+
+server.all('/user', (req,res,next)=>{
+    console.log('por aqui paso');
+    
+    next();
+ 
+ });
 server.get('/user', (req,res)=>{ // retornando un json
 
     res.send({
@@ -97,15 +105,18 @@ server.get('/otro', (req,res)=>{ // creando la ruta about
       
 });
 
+
+
 server.post('/user/:id',(req,res)=>{ //mostando lo recibido del post en consola
     console.log(req.body);
     console.log(req.params);
     res.send('REQUEST POST');
 });
 
-server.put('/aput',(req,res)=>{
+server.put('/aput/:id',(req,res)=>{
 
-    res.send('form contactupdate request recieved');
+    console.log(req.body);
+    res.send('User ${req.params.id} updated'); // para acceder al parametro en la url
 });
 
 server.delete('/adel',(req,res)=>{
