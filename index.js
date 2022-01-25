@@ -1,11 +1,18 @@
 
 const color = require('colors');
 const mate = require('./math.js');
+const morgan = require('morgan'); //llamado modulo morgan npm i morgan
 console.log(mate);
 const os = require('os');
 console.log(os.platform());
 console.log(os.release());
 console.log('free mem', os.freemem());
+function logger(req,res,next){ //middleware
+
+    
+    console.log( `Request Recieved: ${req.protocol}://${req.get('host')}${req.originalUrl}`);
+    next();
+}
 const fs = require('fs');
 fs.writeFile('./texto.txt', 'la persona que me gusta es: ', function(err){ // ubicacion del archivo, menaje a escribir, funcion callback para aber el error
      
@@ -67,7 +74,8 @@ server.get('/', function(req, res){
 
 });
 server.use(express.json()); // hace que expres entienda el formato json
-
+server.use(logger);
+server.use(morgan('dev'));
 server.get('/about', (req,res)=>{ // creando la ruta about
 
     res.send('About me');
