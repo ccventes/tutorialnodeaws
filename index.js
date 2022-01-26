@@ -7,12 +7,7 @@ const os = require('os');
 console.log(os.platform());
 console.log(os.release());
 console.log('free mem', os.freemem());
-function logger(req,res,next){ //middleware
 
-    
-    console.log( `Request Recieved: ${req.protocol}://${req.get('host')}${req.originalUrl}`);
-    next();
-}
 const fs = require('fs');
 fs.writeFile('./texto.txt', 'la persona que me gusta es: ', function(err){ // ubicacion del archivo, menaje a escribir, funcion callback para aber el error
      
@@ -68,14 +63,42 @@ const express = require('express');
 const res = require('express/lib/response');
 const { append } = require('express/lib/response');
 const server  = express();
+
+/*
 server.get('/', function(req, res){
      res.send('<h1>Hola MUndo</h1>');
      res.end();
 
 });
+*/
+//settings
+// todo esto se usa en la parte donde el puerto escucha
+//palabras reservadas get y set
+server.set('AppName','TutoNode'); // nombre de la app
+server.set('port', 3000); // puerto de uso
+server.set('view engine', 'ejs');
+
+
+
+
+//Middlewares
 server.use(express.json()); // hace que expres entienda el formato json
 server.use(logger);
 server.use(morgan('dev'));
+function logger(req,res,next){ //middleware
+
+    
+    console.log( `Request Recieved: ${req.protocol}://${req.get('host')}${req.originalUrl}`);
+    next();
+}
+
+
+
+//routes
+server.get('/', (req,res) => {
+    res.render('index.ejs');
+});
+
 server.get('/about', (req,res)=>{ // creando la ruta about
 
     res.send('About me');
@@ -131,10 +154,13 @@ server.delete('/adel',(req,res)=>{
 
     res.send('delete request');
 });
+// este es un middleware pero debe usarse  al final
+server.use(express.static('public'));// uso de express static en caso de que no se acceda a ninguna ruta
 
 
-
-server.listen(5000,function(){
-    console.log('server on port 5000'.green)
+///server listen//
+server.listen(server.get('port'),function(){
+    console.log(server.get( 'AppName')); // nombre de la app puesto en settings, debe estar olo
+    console.log('server on port  '.green, server.get('port'));
 
 } );
