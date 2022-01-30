@@ -1,4 +1,16 @@
 
+//conexion base de datos postgresql
+// deben creaar sus propias tablas, no suban las credenciales de la db a git
+const { Sequelize } = require('sequelize'); 
+const sequelize = new Sequelize('postgres://user:pass@example.com:5432/dbname') // Example for postgres
+// probar la conexion
+try {
+    await sequelize.authenticate();
+    console.log('Connection has been established successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+
 const color = require('colors');
 const mate = require('./math.js');
 const morgan = require('morgan'); //llamado modulo morgan npm i morgan
