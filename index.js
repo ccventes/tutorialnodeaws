@@ -96,7 +96,8 @@ function logger(req,res,next){ //middleware
 
 //routes
 server.get('/', (req,res) => {
-    res.render('index.ejs');
+    const data = [{name: 'olga'},{name: 'ruben'},{name: 'joey'},{name: 'joey'}]
+    res.render('index.ejs',{people : data});
 });
 
 server.get('/about', (req,res)=>{ // creando la ruta about
