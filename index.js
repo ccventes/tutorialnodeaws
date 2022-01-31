@@ -1,12 +1,10 @@
 
 //conexion base de datos postgresql usando sequelize
 // deben creaar sus propias tablas, no suban las credenciales de la db a git
-const {sequelize} = require('./models')
-async function main(){
+const {sequelize, User} = require('./models')
 
-    await sequelize.sync();
-}
-main();
+
+    
 /*
 const { Sequelize } = require('sequelize'); 
 const sequelize = new Sequelize('postgres://user:pass@example.com:5432/dbname') // Example for postgres
@@ -158,10 +156,25 @@ server.get('/otro', (req,res)=>{ // creando la ruta about
 
 
 
-server.post('/user/:id',(req,res)=>{ //mostando lo recibido del post en consola
+server.post('/user',async(req,res)=>{ //mostando lo recibido del post en consola
     console.log(req.body);
-    console.log(req.params);
-    res.send('REQUEST POST');
+    //console.log(req.params);
+    const {name, email,role} = req.body
+    //res.send('REQUEST POST');
+
+    try{
+
+        const user = await User.create({name, email,role});
+        
+        return res.json(user);
+        
+    }
+    catch(err){
+           console.log("aqui se jodio".red, err);
+           return res.status(500).json(err);
+
+    }
+
 });
 
 server.put('/aput/:id',(req,res)=>{
@@ -179,8 +192,10 @@ server.use(express.static('public'));// uso de express static en caso de que no 
 
 
 ///server listen//
-server.listen(server.get('port'),function(){
+server.listen(server.get('port'),async function(){
+    await sequelize.authenticate(); // necesario para que surjan los cambios en bd
     console.log(server.get( 'AppName')); // nombre de la app puesto en settings, debe estar olo
     console.log('server on port  '.green, server.get('port'));
+    console.log('Database CONECTED! ' )
 
 } );
