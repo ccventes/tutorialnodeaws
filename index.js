@@ -129,14 +129,27 @@ server.all('/user', (req,res,next)=>{
     next();
  
  });
-server.get('/user', (req,res)=>{ // retornando un json
+server.get('/user', async (req,res)=>{ // retornando un json
 
+    /* parte vieja del tutorial
     res.send({
 
         username: 'Cameron',
         lastName: 'Ventes'
     
     });
+    */
+   //Obtener a todos los usuarios
+    try{
+        const usuarios = await User.findAll();
+        return res.json(usuarios);
+           
+    }
+    catch(err){
+        console.log(err);
+        return res.status(500).json({error: 'se pifio'});
+    }
+    
       
 });
 
