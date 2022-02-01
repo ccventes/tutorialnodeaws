@@ -1,7 +1,7 @@
 
 //conexion base de datos postgresql usando sequelize
 // deben creaar sus propias tablas, no suban las credenciales de la db a git
-const {sequelize, User} = require('./models')
+const {sequelize, User, Post} = require('./models')
 
 
     
@@ -216,6 +216,24 @@ server.put('/aput/:id',(req,res)=>{
 server.delete('/adel',(req,res)=>{
 
     res.send('delete request');
+});
+
+server.post('/post', async(req,res)=>{
+    const{userUuid, body} = req.body;  
+    try{
+
+      //creo que me va a molestar
+      // si no me molesta es porque el orm diferencia entre el modelo User y la tabla usuarios por si solita
+      const user = await User.findOne({where: {uuid: userUuid}}); // buscar en el request un usuario igual al userUuid
+      const post = await Post.create({body,userId: user.id}); // crear ese post con el usuario encontrado usuario
+      return res.json(post);  //retornar el post
+    }
+    catch(err){
+
+        console.log(err)
+        return res.status(500).json(err);
+    }
+
 });
 // este es un middleware pero debe usarse  al final
 server.use(express.static('public'));// uso de express static en caso de que no se acceda a ninguna ruta

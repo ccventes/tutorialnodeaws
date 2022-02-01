@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate({User}) { // crear relaciones entre los modelos (post -> user)
       // definir asociacion aqui
       //userId es la llave foranea
-      this.belongsTo(user,{foreignKey: 'userId', }) // este {post} pertenece a un {usuario}
+      this.belongsTo(User,{foreignKey: 'userId' }) // este {post} pertenece a un {usuario}
 
     }
   }
