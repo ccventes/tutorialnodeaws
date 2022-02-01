@@ -153,6 +153,23 @@ server.get('/user', async (req,res)=>{ // retornando un json
       
 });
 
+server.get('/user/:uuid', async (req,res)=>{ // retornando un json
+    const uuid = req.params.uuid
+    try{
+        const usuarios = await User.findOne({
+
+            where: {uuid }
+        });
+        return res.json(usuarios);
+           
+    }
+    catch(err){
+        console.log(err);
+        return res.status(500).json({error: 'se pifio en el de uno solo'.red});
+    }
+    
+      
+});
 
 
 server.get('/contact', (req,res)=>{ // creando la ruta about

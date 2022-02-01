@@ -11,10 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
 
 
-    static associate(models) {
-      // define association here
+    static associate({Post}) {
+      // definir asociacion aqui
+      this.hasMany( Post, {foreignKey: 'UserId'}); //este usuario tiene muchos posts
     }
-    ////////////////////////////
+    ///////////////ocultar un dato al hacer post (queda en la db)/////////////
     toJSON(){
         return {...this.get(),id: undefined}
     } 
