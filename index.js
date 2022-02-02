@@ -213,9 +213,50 @@ server.put('/aput/:id',(req,res)=>{
     res.send('User ${req.params.id} updated'); // para acceder al parametro en la url
 });
 
-server.delete('/adel',(req,res)=>{
+//BORRAR USUARIOS DE LA DB
 
-    res.send('delete request');
+server.delete('/user/:uuid', async (req,res)=>{
+
+    const uuid = req.params.uuid
+    try{
+
+        const user = await User.findOne ({where: {uuid }}); //buscar el usuario por uuid
+        await user.destroy(); // borrar ese usuario
+         return res.json({message : 'user deleted'});  //retornar el post
+       }
+       catch(err){
+   
+           console.log('Se pifio en la funcion de mostrar '.red);
+           console.log(err)
+           return res.status(500).json(err);
+       }
+
+    
+});
+
+// modificar campos de la BD
+
+server.put('/user/:uuid', async (req,res)=>{
+
+    const uuid = req.params.uuid;
+    const {name, email, role} = req.body;
+    try{
+
+        const user = await User.findOne ({where: {uuid }}); //buscar usuario por uuid
+        user.name = name;
+        user.email = email;
+        user.role = role;
+        await user.save(); //save es para hacer  cambios en la db
+        return res.json({message : 'user updated'});  //retornar el post
+       }
+       catch(err){
+   
+           console.log('Se pifio en la funcion de mostrar '.red);
+           console.log(err)
+           return res.status(500).json(err);
+       }
+
+    
 });
 
 server.post('/post', async(req,res)=>{
