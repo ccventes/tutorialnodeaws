@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(User,{foreignKey: 'userId' }) // este {post} pertenece a un {usuario}
 
     }
+    ///Vamos a ocultar el usuario
+    toJSON(){
+      return {...this.get(), id: undefined, userId: undefined }
+    }
   }
   Post.init({
     //cambiar el type de body
@@ -28,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
 
       type: DataTypes.STRING,
       allowNull: false
-    } 
+    }, 
     
   }, {
     sequelize,
