@@ -235,6 +235,23 @@ server.post('/post', async(req,res)=>{
     }
 
 });
+
+server.get('/post', async(req,res)=>{
+      
+    try{
+
+     const posts = await Post.findAll({include : [{model : User, as: 'user'}]}); //buscar todos los post de un usuario, se modificó el User para que quedara con minuscula
+      
+      return res.json(posts);  //retornar el post
+    }
+    catch(err){
+
+        console.log('Se pifio en la funcion de mostrar '.red);
+        console.log(err)
+        return res.status(500).json(err);
+    }
+
+});
 // este es un middleware pero debe usarse  al final
 server.use(express.static('public'));// uso de express static en caso de que no se acceda a ninguna ruta
 
